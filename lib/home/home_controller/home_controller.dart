@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:movie_api/entity/api_model.dart';
 import 'package:movie_api/home/home_service/home_service.dart';
@@ -5,13 +6,30 @@ import 'package:movie_api/home/home_service/home_service.dart';
 class HomeController extends GetxController {
   bool isLoading = true;
   Model? apiValue;
+  Model? popular;
   List<dynamic>? list;
+  List<dynamic> popularlist = [];
   List<String> images = [];
-  var map;
+
+  int deger = 1;
+
+  ScrollController? controller;
 
   @override
   void onInit() {
-    getHomeApi();
+    controller = ScrollController();
+    controller!.addListener(() {
+      if (controller!.position.pixels == controller!.position.maxScrollExtent) {
+        deger = deger + 1;
+        getHomeApiList();
+        print("degerrrrrrr" + deger.toString());
+        update();
+      } else {
+        print("a");
+      }
+    });
+
+    getPopularList();
     super.onInit();
   }
 
@@ -20,14 +38,19 @@ class HomeController extends GetxController {
     update();
   }
 
-  getHomeApi() async {
-    setIsloading(true);
-    apiValue = await HomeService().getHomeApi(1);
+  getHomeApiList() async {
+    apiValue = await HomeService().getHomeApi(deger);
     list = apiValue!.tvShows;
-    for (int i = 0; i < list!.length; i++) {
-      print(list![i]["image_thumbnail_path"]);
-      images.add(list![i]["image_thumbnail_path"]);
-    }
+    print("homelist" + list.toString());
     setIsloading(false);
+  }
+
+  getPopularList() async {
+    setIsloading(true);
+    popular = await HomeService().getPopularList();
+    for (int i = 0; i < 10; i++) {
+      popularlist.add(popular!.tvShows![i]);
+    }
+    getHomeApiList();
   }
 }
