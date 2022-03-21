@@ -17,75 +17,54 @@ class CarouselList extends StatelessWidget {
               items: hc.popularlist
                   .map(
                     (item) => InkWell(
-                      onTap: () {
-                        Get.to(() => DetayView(detailId: item["id"]));
-                      },
-                      child: Container(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        width: Get.size.width * 0.5,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          /*   boxShadow: [
-                            BoxShadow(
-                                color: Colors.white.withOpacity(0.3),
-                                blurRadius: 1.0,
-                                spreadRadius: 1.0)
-                          ], */
-                          /* border:
-                            Border.all(width: 2, color: Colors.white.withOpacity(0.2)), */
-                          //color: Colors.white,
-                          image: DecorationImage(
-                              fit: BoxFit.contain,
-                              image: NetworkImage(
-                                item["image_thumbnail_path"],
-                              )),
-                        ),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Container(
-                                width: 40.0,
-                                height: 40.0,
-                                child: const Icon(
-                                  Icons.star_rounded,
-                                  color: Color(0xffeceded),
-                                  size: 20.0,
-                                ),
-                              ).asGlass(
-                                frosted: true,
-                                tileMode: TileMode.clamp,
-                                clipBorderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20.0)),
-                              ),
-                            ),
-                            /*  Align(
-                                                    alignment: Alignment.bottomCenter,
-                                                    child: Container(
-                                                        alignment: Alignment.center,
-                                                        width: Get.size.width,
-                                                        height: Get.size.height * 0.04,
-                                                        child: Text(
-                                                          "ssas",
-                                                          style: const TextStyle(
-                                                              color: Color(0xffeceded),
-                                                              fontSize: 15.0,
-                                                              fontWeight:
-                                                                  FontWeight.w700),
-                                                        )).asGlass(
-                                                      frosted: true,
-                                                    ),
-                                                  ) */
-                          ],
-                        ),
-                      ),
-                    ),
+                        onTap: () {
+                          Get.to(() => DetayView(detailId: item["id"]));
+                        },
+                        child: Container(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          width: Get.size.width * 0.5,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            /* boxShadow: const [
+                              BoxShadow(
+                                  spreadRadius: 4.0,
+                                  blurRadius: 4.0,
+                                  color: Colors.white10)
+                            ], */
+                            /*  border: Border.all(
+                                width: 2.0,
+                                color: Colors.white10,
+                                style: BorderStyle.solid), */
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: NetworkImage(
+                                  item["image_thumbnail_path"],
+                                )),
+                          ),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: Container(
+                                    width: Get.size.width * 0.09,
+                                    height: Get.size.height * 0.05,
+                                    decoration:
+                                        BoxDecoration(color: Colors.black45),
+                                    child: Icon(
+                                      Icons.star_purple500_sharp,
+                                      size: 18.0,
+                                      color: Colors.white,
+                                    )),
+                              )
+                            ],
+                          ),
+                        )),
                   )
                   .toList(),
               options: CarouselOptions(
-                height: Get.size.height * 0.3,
+                height: Get.size.height * 0.28,
                 aspectRatio: 16 / 9,
-                viewportFraction: 0.5,
+                viewportFraction: 0.4,
                 initialPage: 0,
                 enableInfiniteScroll: true,
                 reverse: false,
