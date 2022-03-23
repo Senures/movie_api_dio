@@ -14,7 +14,7 @@ class DetayView extends StatelessWidget {
         init: DetayController(detailId: detailId),
         builder: (dc) {
           return Scaffold(
-            backgroundColor: const Color(0xff3d6190).withOpacity(0.3),
+            backgroundColor: const Color(0xff221957),
             body: dc.isLoading
                 ? const Center(
                     child: CircularProgressIndicator(),
@@ -66,12 +66,6 @@ class DetayView extends StatelessWidget {
                                                 color: Colors.white,
                                                 borderRadius:
                                                     BorderRadius.circular(5.0),
-                                                /*  boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors.grey.shade200,
-                                                      blurRadius: 1.0,
-                                                      spreadRadius: 1.0)
-                                                ], */
                                                 image: DecorationImage(
                                                     image: NetworkImage(dp),
                                                     fit: BoxFit.cover)),
@@ -80,10 +74,9 @@ class DetayView extends StatelessWidget {
                                       );
                                     }),
                               ).asGlass(
-                                  frosted: false,
-                                  //clipBorderRadius: BorderRadius.circular(15.0),
-                                  tintColor: Colors.white.withOpacity(0.1)),
-                              SizedBox(
+                                frosted: false,
+                              ),
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Padding(
@@ -95,7 +88,7 @@ class DetayView extends StatelessWidget {
                                   children: [
                                     Text(
                                       dc.detail!.name.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20.0),
@@ -108,14 +101,14 @@ class DetayView extends StatelessWidget {
                                           Text(
                                             double.parse(dc.detail!.rating!)
                                                 .toStringAsFixed(2),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 15.0),
+                                                fontSize: 16.0),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 10.0,
                                           ),
-                                          Text("⭐⭐⭐⭐⭐")
+                                          const Text("⭐⭐⭐⭐⭐")
                                         ],
                                       ),
                                     )
@@ -141,20 +134,9 @@ class DetayView extends StatelessWidget {
                                             //width: Get.size.width * 0.2,
                                             alignment: Alignment.center,
                                             padding: const EdgeInsets.all(7.0),
-                                            // width: Get.size.width * 0.3,
-                                            /* decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0),
-                                                color: const Color(0xff3d6190),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                      blurRadius: 1.0,
-                                                      spreadRadius: 1.0,
-                                                      color: Colors.white)
-                                                ]), */
                                             child: Text(
                                               dc.genreslist![indeks],
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white),
                                             )).asGlass(
                                             tileMode: TileMode.mirror,
@@ -174,46 +156,12 @@ class DetayView extends StatelessWidget {
                                     dc.detail!.description.toString(),
                                     maxLines: 10,
                                     // overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Color(0xffb9b5b3),
                                     ),
                                   ),
                                 ),
                               ),
-                              /*   Container(
-                                width: Get.size.width,
-                                height: Get.size.height * 0.06,
-                                color: Colors.amber,
-                                child: ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: dc.genreslist!.length,
-                                    itemBuilder: (context, indeks) {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10.0, vertical: 10.0),
-                                        child: Container(
-                                            alignment: Alignment.center,
-                                            padding: const EdgeInsets.all(5.0),
-                                            // width: Get.size.width * 0.3,
-                                            /* decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0),
-                                                color: const Color(0xff3d6190),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                      blurRadius: 1.0,
-                                                      spreadRadius: 1.0,
-                                                      color: Colors.white)
-                                                ]), */
-                                            child: Text(
-                                              dc.genreslist![indeks],
-                                              style:
-                                                  TextStyle(color: Colors.white),
-                                            )).asGlass(frosted: false),
-                                      );
-                                    }),
-                              ) */
                               Container(
                                 width: Get.size.width,
                                 height: Get.size.height * 0.15,
@@ -228,151 +176,125 @@ class DetayView extends StatelessWidget {
                                           child: Container(
                                             alignment: Alignment.center,
                                             width: Get.size.width * 0.6,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                color: const Color(0xff221957),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                      blurRadius: 2.0,
+                                                      spreadRadius: 1.0,
+                                                      color: Color(0xff4d3ea6))
+                                                ]),
                                             child: Column(
                                               children: [
                                                 Container(
-                                                  margin: EdgeInsets.all(10.0),
+                                                  margin: const EdgeInsets.all(
+                                                      10.0),
                                                   width: Get.size.width * 0.5,
-                                                  height:
-                                                      Get.size.height * 0.03,
-                                                  child: Row(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                      color: const Color(
+                                                          0xff221957),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                            blurRadius: 2.0,
+                                                            spreadRadius: 1.0,
+                                                            color: Color(
+                                                                0xff4d3ea6))
+                                                      ]),
+                                                  //  color: Colors.red,
+                                                  //height:Get.size.height * 0.03,
+
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceAround,
                                                     children: [
-                                                      Text("Season " +
-                                                          item.season
-                                                              .toString()),
-                                                      Icon(
-                                                        Icons
-                                                            .video_collection_rounded,
-                                                        color: Colors.white,
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            "Season " +
+                                                                item.season
+                                                                    .toString(),
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 15.0,
+                                                            ),
+                                                          ),
+                                                          const Icon(
+                                                            Icons.movie,
+                                                            color: Colors.white,
+                                                          ),
+                                                          /*    Text(
+                                                            "Episode " +
+                                                                item.episode
+                                                                    .toString(),
+                                                            style: TextStyle(
+                                                                color: Colors.white,
+                                                                fontSize: 17.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ), */
+                                                        ],
                                                       ),
-                                                      Text("Episode " +
-                                                          item.episode
-                                                              .toString()),
+                                                      Text(
+                                                        "Episode " +
+                                                            item.episode
+                                                                .toString(),
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 15.0,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        margin: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 10.0),
+                                                        child: Text(
+                                                          item.name.toString(),
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 15.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
-                                                Text(item.name.toString()),
+                                                /*   Text(
+                                                  item.name.toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 17.0,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ), */
                                               ],
                                             ),
-                                          ).asGlass(
+                                          ) /* .asGlass(
                                               tintColor: Colors.white
-                                                  .withOpacity(0.3)));
+                                                  .withOpacity(0.3)) */
+                                          );
                                     }),
                               )
                             ],
                           ),
                         ),
-                      )
-
-                      /*   Align(
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                              child: Container(
-                                width: Get.size.width,
-                                height: Get.size.height * 0.18,
-                                child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    shrinkWrap: true,
-                                    itemCount: dc.pictures!.length,
-                                    itemBuilder: (context, i) {
-                                      var dp = dc.pictures![i];
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 20.0, horizontal: 5.0),
-                                        child: Container(
-                                          width: 120.0,
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                    color: Colors.white,
-                                                    blurRadius: 1.0,
-                                                    spreadRadius: 1.0)
-                                              ],
-                                              image: DecorationImage(
-                                                  image: NetworkImage(dp),
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                      );
-                                    }),
-                              ).asGlass(
-                                  frosted: false,
-                                  //clipBorderRadius: BorderRadius.circular(15.0),
-                                  tintColor: Colors.white.withOpacity(0.1)),
-                            ),
-                            Text(
-                              dc.detail!.name.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30.0, vertical: 10.0),
-                              child: Container(
-                                width: Get.size.width * 0.8,
-                                color: Colors.red,
-                                child: Text(
-                                  dc.detail!.description.toString(),
-                                  maxLines: 10,
-                                  // overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(color: Color(0xffb9b5b3)),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 30.0),
-                              child: Container(
-                                width: Get.size.width,
-                                height: Get.size.height * 0.06,
-                                color: Colors.amber,
-                                child: ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: dc.genreslist!.length,
-                                    itemBuilder: (context, indeks) {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10.0, vertical: 10.0),
-                                        child: Container(
-                                            alignment: Alignment.center,
-                                            padding: const EdgeInsets.all(5.0),
-                                            // width: Get.size.width * 0.3,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0),
-                                                color: const Color(0xff3d6190),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                      blurRadius: 1.0,
-                                                      spreadRadius: 1.0,
-                                                      color: Colors.white)
-                                                ]),
-                                            child: Text(
-                                              dc.genreslist![indeks],
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            )),
-                                      );
-                                    }),
-                              ),
-                            )
-                          ],
-                        ),
-                      ), */
-                      ,
+                      ),
                     ],
                   ),
           );

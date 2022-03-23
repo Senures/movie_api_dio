@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:glass/glass.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +16,8 @@ class HomeView extends StatelessWidget {
         init: HomeController(),
         builder: (hc) {
           return Scaffold(
-            backgroundColor: const Color(0xff3d6190).withOpacity(0.3),
+            backgroundColor: const Color(0xff221957),
+            //const Color(0xff3d6190).withOpacity(0.3),
             body: hc.isLoading
                 ? const Center(
                     child: CircularProgressIndicator(
@@ -41,11 +41,11 @@ class HomeView extends StatelessWidget {
                             customTitle(),
                             CustomSizedBox(height: Get.size.height * 0.02),
                             customSearch(),
-                            CustomSizedBox(height: Get.size.height * 0.04),
+                            CustomSizedBox(height: Get.size.height * 0.03),
                             "Most Popular TV Shows".homeText(),
-                            CustomSizedBox(height: Get.size.height * 0.04),
+                            CustomSizedBox(height: Get.size.height * 0.03),
                             const CarouselList(),
-                            CustomSizedBox(height: Get.size.height * 0.02),
+                            //CustomSizedBox(height: Get.size.height * 0.01),
                             "All Shows".homeText(),
                             const HomeList(),
                           ],
@@ -115,9 +115,10 @@ customSearch() {
           style: TextStyle(color: Color(0xffb9b5b3)),
         ),
       ).asGlass(
-          frosted: false,
-          clipBorderRadius: BorderRadius.circular(10.0),
-          tintColor: Colors.white.withOpacity(0.3)),
+        frosted: false,
+        clipBorderRadius: BorderRadius.circular(10.0),
+        // tintColor: Colors.white.withOpacity(0.3)
+      ),
       Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),

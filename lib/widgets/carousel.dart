@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:glass/src/GlassWidget.dart';
 import 'package:movie_api/detail/detay_view/detay_view.dart';
 import 'package:movie_api/home/home_controller/home_controller.dart';
 
@@ -17,53 +16,67 @@ class CarouselList extends StatelessWidget {
               items: hc.popularlist
                   .map(
                     (item) => InkWell(
-                        onTap: () {
-                          Get.to(() => DetayView(detailId: item["id"]));
-                        },
-                        child: Container(
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          width: Get.size.width * 0.5,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            /* boxShadow: const [
-                              BoxShadow(
-                                  spreadRadius: 4.0,
-                                  blurRadius: 4.0,
-                                  color: Colors.white10)
-                            ], */
-                            /*  border: Border.all(
-                                width: 2.0,
-                                color: Colors.white10,
-                                style: BorderStyle.solid), */
-                            image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: NetworkImage(
+                      onTap: () {
+                        Get.to(() => DetayView(detailId: item["id"]));
+                      },
+                      child: Container(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        //width: Get.size.width * 0.5,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 8,
+                              child: Container(
+                                width: Get.size.width * 0.50,
+                                //height: 170.0,
+                                color: Colors.amber,
+                                child: Image.network(
                                   item["image_thumbnail_path"],
-                                )),
-                          ),
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.bottomRight,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                                flex: 3,
                                 child: Container(
-                                    width: Get.size.width * 0.09,
-                                    height: Get.size.height * 0.05,
-                                    decoration:
-                                        BoxDecoration(color: Colors.black45),
-                                    child: Icon(
-                                      Icons.star_purple500_sharp,
-                                      size: 18.0,
-                                      color: Colors.white,
-                                    )),
-                              )
-                            ],
-                          ),
-                        )),
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  //margin: EdgeInsets.all(8.0),
+                                  //color: Colors.blue,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item["name"],
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 13.0),
+                                      ),
+                                      const SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      const Text(
+                                        "⭐⭐⭐⭐⭐",
+                                        style: TextStyle(fontSize: 10.0),
+                                      )
+                                    ],
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ),
+                    ),
                   )
                   .toList(),
               options: CarouselOptions(
-                height: Get.size.height * 0.28,
-                aspectRatio: 16 / 9,
+                height: Get.size.height * 0.38,
+                aspectRatio: 16 / 8,
                 viewportFraction: 0.4,
                 initialPage: 0,
                 enableInfiniteScroll: true,
