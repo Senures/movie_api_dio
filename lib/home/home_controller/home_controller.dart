@@ -5,8 +5,10 @@ import 'package:movie_api/home/home_service/home_service.dart';
 
 class HomeController extends GetxController {
   bool isLoading = true;
+  TextEditingController searchcontroller = TextEditingController();
   Model? apiValue;
   Model? popular;
+  Model? search;
   List<dynamic>? list;
   List<dynamic> popularlist = [];
   List<String> images = [];
@@ -52,5 +54,13 @@ class HomeController extends GetxController {
       popularlist.add(popular!.tvShows![i]);
     }
     getHomeApiList();
+  }
+
+  getSearchList() async {
+    setIsloading(true);
+    search = await HomeService().getSearchApi(searchcontroller.text);
+    list = apiValue!.tvShows;
+    setIsloading(false);
+    searchcontroller.clear();
   }
 }

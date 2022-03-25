@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:movie_api/extension/extensions.dart';
 import 'package:movie_api/home/home_controller/home_controller.dart';
 import 'package:movie_api/widgets/carousel.dart';
+import 'package:movie_api/widgets/circularProgress.dart';
 import 'package:movie_api/widgets/movie_list.dart';
 import 'package:movie_api/widgets/sized_box.dart';
 
@@ -17,12 +18,9 @@ class HomeView extends StatelessWidget {
         builder: (hc) {
           return Scaffold(
             backgroundColor: const Color(0xff221957),
-            //const Color(0xff3d6190).withOpacity(0.3),
             body: hc.isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.red,
-                    ),
+                ? Center(
+                    child: customCircularProgress(),
                   )
                 : SafeArea(
                     child: Container(
@@ -99,42 +97,53 @@ customTitle() {
 }
 
 customSearch() {
+  var hc = Get.put(HomeController());
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
       Container(
-        padding: const EdgeInsets.all(14.0),
-        /*  decoration: BoxDecoration(
+          padding: const EdgeInsets.all(14.0),
+          width: Get.size.width * 0.68,
+          height: Get.size.height * 0.06,
+          decoration: BoxDecoration(
+              color: const Color(0xff221957),
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: const [
+                BoxShadow(
+                    blurRadius: 1.0,
+                    spreadRadius: 1.0,
+                    color: Color(0xff4d3ea6))
+              ]),
+          child: TextFormField(
+            style: const TextStyle(color: Color(0xffb9b5b3)),
+            controller: hc.searchcontroller,
+            cursorColor: Colors.white,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.only(top: 10.0),
+              isDense: true,
+              border: InputBorder.none,
+              hintText: "Search movies,series",
+              hintStyle: TextStyle(color: Color(0xffb9b5b3)),
+            ),
+          )),
+      GestureDetector(
+        onTap: () {
+          hc.getSearchList();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: const Color(0xff4d3ea6),
             borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(
-                width: 1.0, color: Colors.white10, style: BorderStyle.solid)), */
-        width: Get.size.width * 0.68,
-        height: Get.size.height * 0.06,
-        child: const Text(
-          "Search movies,series",
-          style: TextStyle(color: Color(0xffb9b5b3)),
+          ),
+          padding: const EdgeInsets.all(12.0),
+          width: Get.size.width * 0.13,
+          height: Get.size.height * 0.06,
+          child: Image.asset(
+            "assets/search_icon.png",
+            color: const Color(0xffeceded),
+          ),
         ),
-      ).asGlass(
-        frosted: false,
-        clipBorderRadius: BorderRadius.circular(10.0),
-        // tintColor: Colors.white.withOpacity(0.3)
-      ),
-      Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(
-                width: 1.0, color: Colors.white10, style: BorderStyle.solid)),
-        padding: const EdgeInsets.all(12.0),
-        width: Get.size.width * 0.13,
-        height: Get.size.height * 0.06,
-        child: Image.asset(
-          "assets/search_icon.png",
-          color: const Color(0xffeceded),
-        ),
-      ).asGlass(
-          frosted: false,
-          clipBorderRadius: BorderRadius.circular(10.0),
-          tintColor: Colors.white.withOpacity(0.3)),
+      )
     ],
   );
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:glass/src/GlassWidget.dart';
 import 'package:movie_api/detail/detay_controller/detay_controller.dart';
 import 'package:movie_api/detail/detay_view/photo.dart';
+import 'package:movie_api/widgets/circularProgress.dart';
 
 class DetayView extends StatelessWidget {
   int detailId;
@@ -16,8 +17,8 @@ class DetayView extends StatelessWidget {
           return Scaffold(
             backgroundColor: const Color(0xff221957),
             body: dc.isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
+                ? Center(
+                    child: customCircularProgress(),
                   )
                 : Stack(
                     children: [
@@ -33,6 +34,38 @@ class DetayView extends StatelessWidget {
                           ),
                         ),
                       ),
+                      Positioned(
+                          top: Get.size.height * 0.27,
+                          right: Get.size.width * 0.05,
+                          child: Container(
+                            width: Get.size.width * 0.10,
+                            height: Get.size.height * 0.05,
+                            child: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.share,
+                                  size: 25.0,
+                                  color: Color(0xff4d3ea6),
+                                )),
+                            decoration: const BoxDecoration(),
+                            //color: Color(0xff4d3ea6),
+                          ).asGlass()),
+                      Positioned(
+                          top: Get.size.height * 0.2,
+                          right: Get.size.width * 0.05,
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: Get.size.width * 0.10,
+                            height: Get.size.height * 0.05,
+                            child: Text(
+                              dc.detail!.country!,
+                              style: const TextStyle(
+                                  color: Color(0xff4d3ea6),
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            decoration: const BoxDecoration(),
+                            //color: Color(0xff4d3ea6),
+                          ).asGlass()),
                       Positioned(
                         top: Get.size.height * 0.35,
                         left: 15.0,
@@ -91,7 +124,7 @@ class DetayView extends StatelessWidget {
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 20.0),
+                                          fontSize: 18.0),
                                     ),
                                     Container(
                                       height: 30.0,
@@ -192,22 +225,6 @@ class DetayView extends StatelessWidget {
                                                   margin: const EdgeInsets.all(
                                                       10.0),
                                                   width: Get.size.width * 0.5,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
-                                                      color: const Color(
-                                                          0xff221957),
-                                                      boxShadow: const [
-                                                        BoxShadow(
-                                                            blurRadius: 2.0,
-                                                            spreadRadius: 1.0,
-                                                            color: Color(
-                                                                0xff4d3ea6))
-                                                      ]),
-                                                  //  color: Colors.red,
-                                                  //height:Get.size.height * 0.03,
-
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
@@ -225,7 +242,8 @@ class DetayView extends StatelessWidget {
                                                             "Season " +
                                                                 item.season
                                                                     .toString(),
-                                                            style: TextStyle(
+                                                            style:
+                                                                const TextStyle(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 15.0,
@@ -235,35 +253,24 @@ class DetayView extends StatelessWidget {
                                                             Icons.movie,
                                                             color: Colors.white,
                                                           ),
-                                                          /*    Text(
-                                                            "Episode " +
-                                                                item.episode
-                                                                    .toString(),
-                                                            style: TextStyle(
-                                                                color: Colors.white,
-                                                                fontSize: 17.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ), */
                                                         ],
                                                       ),
                                                       Text(
                                                         "Episode " +
                                                             item.episode
                                                                 .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 15.0,
                                                         ),
                                                       ),
                                                       Container(
-                                                        margin: EdgeInsets
-                                                            .symmetric(
-                                                                vertical: 10.0),
+                                                        margin: const EdgeInsets
+                                                                .symmetric(
+                                                            vertical: 10.0),
                                                         child: Text(
                                                           item.name.toString(),
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 15.0,
@@ -275,20 +282,9 @@ class DetayView extends StatelessWidget {
                                                     ],
                                                   ),
                                                 ),
-                                                /*   Text(
-                                                  item.name.toString(),
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 17.0,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ), */
                                               ],
                                             ),
-                                          ) /* .asGlass(
-                                              tintColor: Colors.white
-                                                  .withOpacity(0.3)) */
-                                          );
+                                          ));
                                     }),
                               )
                             ],
