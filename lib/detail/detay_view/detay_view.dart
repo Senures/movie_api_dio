@@ -45,11 +45,12 @@ class DetayView extends StatelessWidget {
                                 icon: const Icon(
                                   Icons.share,
                                   size: 25.0,
-                                  color: Color(0xff4d3ea6),
+                                  color: Colors.white,
                                 )),
-                            decoration: const BoxDecoration(),
+                            decoration:
+                                const BoxDecoration(color: Color(0xff4d3ea6)),
                             //color: Color(0xff4d3ea6),
-                          ).asGlass()),
+                          )),
                       Positioned(
                           top: Get.size.height * 0.2,
                           right: Get.size.width * 0.05,
@@ -60,12 +61,13 @@ class DetayView extends StatelessWidget {
                             child: Text(
                               dc.detail!.country!,
                               style: const TextStyle(
-                                  color: Color(0xff4d3ea6),
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w700),
                             ),
-                            decoration: const BoxDecoration(),
+                            decoration:
+                                const BoxDecoration(color: Color(0xff4d3ea6)),
                             //color: Color(0xff4d3ea6),
-                          ).asGlass()),
+                          )),
                       Positioned(
                         top: Get.size.height * 0.35,
                         left: 15.0,
@@ -207,81 +209,60 @@ class DetayView extends StatelessWidget {
                                       return Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Container(
-                                            alignment: Alignment.center,
-                                            width: Get.size.width * 0.6,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                                color: const Color(0xff221957),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                      blurRadius: 2.0,
-                                                      spreadRadius: 1.0,
-                                                      color: Color(0xff4d3ea6))
-                                                ]),
+                                            width: Get.size.width * 0.5,
                                             child: Column(
                                               children: [
                                                 Container(
-                                                  margin: const EdgeInsets.all(
-                                                      10.0),
-                                                  width: Get.size.width * 0.5,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                  margin: EdgeInsets.all(10.0),
+                                                  padding: EdgeInsets.all(10.0),
+                                                  decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xff221957),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20.0),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                            blurRadius: 1.0,
+                                                            spreadRadius: 1.0,
+                                                            color: Color(
+                                                                0xff4d3ea6))
+                                                      ]),
+                                                  child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceAround,
                                                     children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "Season " +
-                                                                item.season
-                                                                    .toString(),
-                                                            style:
-                                                                const TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 15.0,
-                                                            ),
-                                                          ),
-                                                          const Icon(
-                                                            Icons.movie,
-                                                            color: Colors.white,
-                                                          ),
-                                                        ],
+                                                      Text(
+                                                        "Season " +
+                                                            item.season
+                                                                .toString(),
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
                                                       ),
                                                       Text(
                                                         "Episode " +
                                                             item.episode
                                                                 .toString(),
-                                                        style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 15.0,
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        margin: const EdgeInsets
-                                                                .symmetric(
-                                                            vertical: 10.0),
-                                                        child: Text(
-                                                          item.name.toString(),
-                                                          style: const TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 15.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ),
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )
                                                     ],
                                                   ),
                                                 ),
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 15.0),
+                                                  child: Container(
+                                                    child: Text(item.name!,
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white)),
+                                                  ),
+                                                )
                                               ],
                                             ),
                                           ));
