@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:movie_api/detail/detay_service/detay_service.dart';
 import 'package:movie_api/entity/detail_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetayController extends GetxController {
   final int detailId;
@@ -32,5 +33,9 @@ class DetayController extends GetxController {
      episodelist = detail!.episodes;
     print(episodelist![0].name);
     setIsloading(false);
+  }
+
+  clickUrl(String url) async{
+  
   }
 }

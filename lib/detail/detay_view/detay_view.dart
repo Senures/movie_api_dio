@@ -4,6 +4,7 @@ import 'package:glass/src/GlassWidget.dart';
 import 'package:movie_api/detail/detay_controller/detay_controller.dart';
 import 'package:movie_api/detail/detay_view/photo.dart';
 import 'package:movie_api/widgets/circularProgress.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetayView extends StatelessWidget {
   int detailId;
@@ -41,29 +42,19 @@ class DetayView extends StatelessWidget {
                             width: Get.size.width * 0.10,
                             height: Get.size.height * 0.05,
                             child: IconButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  if (await canLaunch(
+                                      dc.detail!.url.toString())) {
+                                    await launch(dc.detail!.url.toString());
+                                  } else {
+                                    throw "could not launch ";
+                                  }
+                                },
                                 icon: const Icon(
                                   Icons.share,
                                   size: 25.0,
                                   color: Colors.white,
                                 )),
-                            decoration:
-                                const BoxDecoration(color: Color(0xff4d3ea6)),
-                            //color: Color(0xff4d3ea6),
-                          )),
-                      Positioned(
-                          top: Get.size.height * 0.2,
-                          right: Get.size.width * 0.05,
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: Get.size.width * 0.10,
-                            height: Get.size.height * 0.05,
-                            child: Text(
-                              dc.detail!.country!,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700),
-                            ),
                             decoration:
                                 const BoxDecoration(color: Color(0xff4d3ea6)),
                             //color: Color(0xff4d3ea6),
