@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:glass/glass.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +8,7 @@ import 'package:movie_api/home/home_controller/home_controller.dart';
 import 'package:movie_api/widgets/carousel.dart';
 import 'package:movie_api/widgets/circularProgress.dart';
 import 'package:movie_api/widgets/movie_list.dart';
+import 'package:movie_api/widgets/search_list.dart';
 import 'package:movie_api/widgets/sized_box.dart';
 
 class HomeView extends StatelessWidget {
@@ -17,41 +20,135 @@ class HomeView extends StatelessWidget {
         init: HomeController(),
         builder: (hc) {
           return Scaffold(
-            backgroundColor: const Color(0xff221957),
-            body: hc.isLoading
-                ? Center(
-                    child: customCircularProgress(),
-                  )
-                : SafeArea(
-                    child: Container(
-                      width: Get.size.width,
-                      height: Get.size.height,
-                      decoration: const BoxDecoration(
-                          // color: const Color(0xff090a0e).w,
+              backgroundColor: const Color(0xff221957),
+              body: hc.isLoading
+                  ? Center(
+                      child: customCircularProgress(),
+                    )
+                  : SafeArea(
+                      child: Container(
+                        width: Get.size.width,
+                        height: Get.size.height,
+                        child: SingleChildScrollView(
+                          controller: hc.controller,
+                          primary: false,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              customTitle(),
+                              CustomSizedBox(height: Get.size.height * 0.02),
+                              customSearch(),
+                              CustomSizedBox(height: Get.size.height * 0.03),
+                              hc.searchcontroller.text.isEmpty
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        "Most Popular TV Shows".homeText(),
+                                        CustomSizedBox(
+                                            height: Get.size.height * 0.03),
+                                        const CarouselList(),
+                                      ],
+                                    )
+                                  : SizedBox(),
+                              /*  "Most Popular TV Shows".homeText(),
+                            CustomSizedBox(height: Get.size.height * 0.03),
+                            const CarouselList(), */
+                              hc.searchcontroller.text.isEmpty
+                                  ? Row(
+                                      children: [
+                                        "All Shows".homeText(),
+                                        SizedBox(),
+                                      ],
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        "Search Result".homeText(),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 30.0),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              hc.clearSearch();
+                                            },
+                                            child: Container(
+                                                alignment: Alignment.center,
+                                                // padding: EdgeInsets.all(8.0),
+                                                width: Get.size.width * 0.08,
+                                                height: Get.size.height * 0.04,
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        const Color(0xff221957),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                          blurRadius: 1.0,
+                                                          spreadRadius: 1.0,
+                                                          color:
+                                                              Color(0xff4d3ea6))
+                                                    ]),
+                                                child:const Icon(
+                                                  Icons.arrow_back,
+                                                  color: Color(0xffeceded),
+                                                  size: 25.0,
+                                                )),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                              /*    hc.searchcontroller.text.isEmpty
+                                  ? "All Shows".homeText()
+                                  : "Search Result".homeText(), */
+                              hc.searchcontroller.text.isEmpty
+                                  ? const HomeList()
+                                  : hc.searchlist!.length == 0
+                                      ? Container(
+                                          padding: const EdgeInsets.all(8.0),
+                                          alignment: Alignment.center,
+                                          width: Get.size.width,
+                                          height: Get.size.height * 0.4,
+                                          //color: Colors.red,
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            width: Get.size.width * 0.9,
+                                            height: Get.size.height * 0.09,
+
+                                            //color: Colors.white,
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  "No results found for your match",
+                                                  style: TextStyle(
+                                                      color: Color(0xffeceded),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15.0),
+                                                ),
+                                                CustomSizedBox(
+                                                  height:
+                                                      Get.size.height * 0.01,
+                                                ),
+                                                Icon(
+                                                  Icons.search_off_rounded,
+                                                  size: 40.0,
+                                                  color: Color(0xff4d3ea6),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : SearchList()
+                              //: const SearchList(),
+                            ],
                           ),
-                      child: SingleChildScrollView(
-                        controller: hc.controller,
-                        primary: false,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            customTitle(),
-                            CustomSizedBox(height: Get.size.height * 0.02),
-                            customSearch(),
-                            CustomSizedBox(height: Get.size.height * 0.03),
-                            "Most Popular TV Shows".homeText(),
-                            CustomSizedBox(height: Get.size.height * 0.03),
-                            const CarouselList(),
-                            //CustomSizedBox(height: Get.size.height * 0.01),
-                            "All Shows".homeText(),
-                            const HomeList(),
-                          ],
                         ),
                       ),
-                    ),
-                  ),
-          );
+                    ));
         });
   }
 }
@@ -128,7 +225,14 @@ customSearch() {
           )),
       GestureDetector(
         onTap: () {
+          if (hc.searchlist != null) {
+            //daha çnce search yapınca result gelip liste doluyor,
+            //bu searche baska bir film gelcek eger lsite temizlenmezse ilk result listesinin
+            //sonuna 2.result ekleniyor ,o yüzden bu listeyi temizlememiyiz
+            hc.searchlist!.clear();
+          }
           hc.getSearchList();
+          /*  hc.isSearching(true); */
         },
         child: Container(
           decoration: BoxDecoration(

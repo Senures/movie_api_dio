@@ -9,11 +9,15 @@ class HomeController extends GetxController {
   Model? apiValue;
   Model? popular;
   Model? search;
-  List<dynamic>? list;
-  List<dynamic> popularlist = [];
+  List<TvShows>? list = [];
+  List<TvShows>? searchlist = [];
+  List<TvShows> popularlist = [];
   List<String> images = [];
+  bool isPageLoading = false;
 
-  int deger = 1;
+  bool searching = false;
+
+  int currentPage = 1;
 
   ScrollController? controller;
 
@@ -22,13 +26,13 @@ class HomeController extends GetxController {
     controller = ScrollController();
     controller!.addListener(() {
       if (controller!.position.pixels == controller!.position.maxScrollExtent) {
-        deger = deger + 1;
+        isPageLoading = true;
+        //burda liste sonuna gitti true oldu yani circular progress dönücek
+        currentPage = currentPage + 1;
+        //current page dönerken 2.sayfayı apiye yollayacak
         getHomeApiList();
-        print("degerrrrrrr" + deger.toString());
         update();
-      } else {
-        print("a");
-      }
+      } else {}
     });
 
     getPopularList();
@@ -41,10 +45,20 @@ class HomeController extends GetxController {
   }
 
   getHomeApiList() async {
-    apiValue = await HomeService().getHomeApi(deger);
-    list = apiValue!.tvShows;
-    print("homelist" + list.toString());
-    setIsloading(false);
+    apiValue = await HomeService().getHomeApi(currentPage);
+    if (list == null) {
+      list = apiValue!.tvShows;
+      setIsloading(false);
+      //eğer liste boş ise
+
+    } else {
+      for (var item in apiValue!.tvShows!) {
+        list!.add(item);
+      } //bu her sayfa aşağı indiğinde listenin sonuna ekliyor
+      setIsloading(false);
+      isPageLoading = false;
+      update();
+    }
   }
 
   getPopularList() async {
@@ -57,10 +71,31 @@ class HomeController extends GetxController {
   }
 
   getSearchList() async {
+    print("GETSEARCH LİSTE GİRDİ");
     setIsloading(true);
+    //önemli veri çekilirken circular gösterir
     search = await HomeService().getSearchApi(searchcontroller.text);
-    list = apiValue!.tvShows;
-    setIsloading(false);
-    searchcontroller.clear();
+    if (searchlist == null) {
+      searchlist = search!.tvShows;
+      setIsloading(false);
+      //eğer liste boş ise
+
+    } else {
+      for (var item in search!.tvShows!) {
+        searchlist!.add(item);
+      } //bu her sayfa aşağı indiğinde listenin sonuna ekliyor
+      setIsloading(false);
+      isPageLoading = false;
+      update();
+    }
   }
+
+  clearSearch() {
+    searchcontroller.clear();
+    update();
+  }
+  /*  isSearching(bool b){
+    searching=b;
+    update();
+  } */
 }

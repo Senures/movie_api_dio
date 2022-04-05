@@ -17,7 +17,7 @@ class CarouselList extends StatelessWidget {
                   .map(
                     (item) => InkWell(
                       onTap: () {
-                        Get.to(() => DetayView(detailId: item["id"]));
+                        Get.to(() => DetayView(detailId: item.id!));
                       },
                       child: Container(
                         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -35,7 +35,7 @@ class CarouselList extends StatelessWidget {
                                 //height: 170.0,
                                 color: Colors.amber,
                                 child: Image.network(
-                                  item["image_thumbnail_path"],
+                                  item.imageThumbnailPath!,
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -52,7 +52,7 @@ class CarouselList extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        item["name"],
+                                        item.name!,
                                         style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
