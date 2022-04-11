@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:glass/src/GlassWidget.dart';
-import 'package:movie_api/detail/detay_controller/detay_controller.dart';
-import 'package:movie_api/detail/detay_view/photo.dart';
+import 'package:movie_api/detail/detail_controller/detail_controller.dart';
+import 'package:movie_api/detail/detail_view/photo.dart';
 import 'package:movie_api/widgets/circularProgress.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DetayView extends StatelessWidget {
+// ignore: must_be_immutable
+class DetailView extends StatelessWidget {
   int detailId;
-  DetayView({Key? key, required this.detailId}) : super(key: key);
+  DetailView({Key? key, required this.detailId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DetayController>(
-        init: DetayController(detailId: detailId),
+    return GetBuilder<DetailController>(
+        init: DetailController(detailId: detailId),
         builder: (dc) {
           return Scaffold(
             backgroundColor: const Color(0xff221957),
@@ -25,40 +27,48 @@ class DetayView extends StatelessWidget {
                     children: [
                       Align(
                         alignment: Alignment.topCenter,
-                        child: Container(
+                        child: SizedBox(
                           width: Get.size.width,
                           height: Get.size.height * 0.45,
-                          color: Colors.red,
+                          //  color: Colors.red,
                           child: Image.network(
                             dc.detail!.imagePath.toString(),
                             fit: BoxFit.cover,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+
+                              return Center(
+                                child: customCircularProgress(),
+                              );
+                            },
                           ),
                         ),
                       ),
-                      Positioned(
-                          top: Get.size.height * 0.27,
-                          right: Get.size.width * 0.05,
-                          child: Container(
-                            width: Get.size.width * 0.10,
-                            height: Get.size.height * 0.05,
-                            child: IconButton(
-                                onPressed: () async {
-                                  if (await canLaunch(
-                                      dc.detail!.url.toString())) {
-                                    await launch(dc.detail!.url.toString());
-                                  } else {
-                                    throw "could not launch ";
-                                  }
-                                },
-                                icon: const Icon(
-                                  Icons.share,
-                                  size: 25.0,
-                                  color: Colors.white,
-                                )),
-                            decoration:
-                                const BoxDecoration(color: Color(0xff4d3ea6)),
-                            //color: Color(0xff4d3ea6),
-                          )),
+                      dc.detail!.url!.isNotEmpty
+                          ? Positioned(
+                              top: Get.size.height * 0.27,
+                              right: Get.size.width * 0.05,
+                              child: Container(
+                                width: Get.size.width * 0.10,
+                                height: Get.size.height * 0.05,
+                                child: IconButton(
+                                    onPressed: () async {
+                                      await launch(dc.detail!.url!);
+                                    },
+                                    icon: const Icon(
+                                      Icons.share,
+                                      size: 25.0,
+                                      color: Colors.white,
+                                    )),
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff4d3ea6),
+                                    borderRadius: BorderRadius.circular(5.0)),
+                                //color: Color(0xff4d3ea6),
+                              ))
+                          : const SizedBox(),
                       Positioned(
                         top: Get.size.height * 0.35,
                         left: 15.0,
@@ -70,7 +80,7 @@ class DetayView extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: Get.size.width,
                                 height: Get.size.height * 0.18,
                                 child: ListView.builder(
@@ -87,14 +97,31 @@ class DetayView extends StatelessWidget {
                                             Get.to(() => PhotoView(dp: dp));
                                           },
                                           child: Container(
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
                                             width: 120.0,
                                             decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0),
-                                                image: DecorationImage(
-                                                    image: NetworkImage(dp),
-                                                    fit: BoxFit.cover)),
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                            ),
+                                            child: Image.network(
+                                              dp,
+                                              fit: BoxFit.cover,
+                                              loadingBuilder:
+                                                  (BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent?
+                                                          loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                }
+
+                                                return Center(
+                                                  child:
+                                                      customCircularProgress(),
+                                                );
+                                              },
+                                            ),
                                           ),
                                         ),
                                       );
@@ -119,22 +146,44 @@ class DetayView extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18.0),
                                     ),
-                                    Container(
+                                    SizedBox(
                                       height: 30.0,
                                       //color: Colors.white,
                                       child: Row(
                                         children: [
-                                          Text(
-                                            double.parse(dc.detail!.rating!)
-                                                .toStringAsFixed(2),
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16.0),
+                                          RatingBar.builder(
+                                            itemSize: 17.0,
+                                            initialRating: double.parse(dc
+                                                    .detail!.rating
+                                                    .toString()) /
+                                                2,
+                                            minRating: 1,
+                                            direction: Axis.horizontal,
+                                            allowHalfRating: true,
+                                            itemCount: 5,
+                                            itemPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 1.0),
+                                            itemBuilder: (context, _) =>
+                                                const Icon(
+                                              Icons.star,
+                                              color: Colors.amber,
+                                            ),
+                                            onRatingUpdate: (rating) {},
                                           ),
                                           const SizedBox(
                                             width: 10.0,
                                           ),
-                                          const Text("⭐⭐⭐⭐⭐")
+                                          Text(
+                                            "(" +
+                                                double.parse(dc.detail!.rating
+                                                        .toString())
+                                                    .toStringAsFixed(2) +
+                                                ")",
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14.0),
+                                          ),
                                         ],
                                       ),
                                     )
@@ -144,7 +193,7 @@ class DetayView extends StatelessWidget {
                               Divider(
                                 color: Colors.white.withOpacity(0.4),
                               ),
-                              Container(
+                              SizedBox(
                                 width: Get.size.width,
                                 height: Get.size.height * 0.07,
                                 //color: Colors.amber,
@@ -157,38 +206,36 @@ class DetayView extends StatelessWidget {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10.0, vertical: 10.0),
                                         child: Container(
-                                            //width: Get.size.width * 0.2,
-                                            alignment: Alignment.center,
-                                            padding: const EdgeInsets.all(7.0),
-                                            child: Text(
-                                              dc.genreslist![indeks],
-                                              style: const TextStyle(
-                                                  color: Colors.white),
-                                            )).asGlass(
-                                            tileMode: TileMode.mirror,
-                                            // frosted: false,
-                                            clipBorderRadius:
-                                                BorderRadius.circular(5.0)),
+                                                alignment: Alignment.center,
+                                                padding: const EdgeInsets.all(7.0),
+                                                child: Text(
+                                                  dc.genreslist![indeks],
+                                                  style: const TextStyle(
+                                                      color: Colors.white),
+                                                ))
+                                            .asGlass(
+                                                tileMode: TileMode.mirror,
+                                                clipBorderRadius:
+                                                    BorderRadius.circular(5.0)),
                                       );
                                     }),
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 10.0),
-                                child: Container(
+                                child: SizedBox(
                                   width: Get.size.width * 0.8,
                                   //color: Colors.red,
                                   child: Text(
                                     dc.detail!.description.toString(),
                                     maxLines: 10,
-                                    // overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       color: Color(0xffb9b5b3),
                                     ),
                                   ),
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 width: Get.size.width,
                                 height: Get.size.height * 0.15,
                                 child: ListView.builder(
@@ -199,13 +246,15 @@ class DetayView extends StatelessWidget {
                                       var item = dc.episodelist![index];
                                       return Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Container(
+                                          child: SizedBox(
                                             width: Get.size.width * 0.5,
                                             child: Column(
                                               children: [
                                                 Container(
-                                                  margin: EdgeInsets.all(10.0),
-                                                  padding: EdgeInsets.all(10.0),
+                                                  margin: const EdgeInsets.all(
+                                                      10.0),
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
                                                   decoration: BoxDecoration(
                                                       color: const Color(
                                                           0xff221957),
@@ -228,7 +277,7 @@ class DetayView extends StatelessWidget {
                                                         "Season " +
                                                             item.season
                                                                 .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color:
                                                                 Colors.white),
                                                       ),
@@ -236,7 +285,7 @@ class DetayView extends StatelessWidget {
                                                         "Episode " +
                                                             item.episode
                                                                 .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color:
                                                                 Colors.white),
                                                       )
@@ -247,12 +296,9 @@ class DetayView extends StatelessWidget {
                                                   padding: const EdgeInsets
                                                           .symmetric(
                                                       horizontal: 15.0),
-                                                  child: Container(
-                                                    child: Text(item.name!,
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white)),
-                                                  ),
+                                                  child: Text(item.name!,
+                                                      style: const TextStyle(
+                                                          color: Colors.white)),
                                                 )
                                               ],
                                             ),

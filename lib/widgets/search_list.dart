@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:movie_api/detail/detay_view/detay_view.dart';
+import 'package:movie_api/detail/detail_view/detail_view.dart';
 import 'package:movie_api/home/home_controller/home_controller.dart';
 import 'package:movie_api/widgets/movie_list.dart';
 
@@ -13,7 +13,6 @@ class SearchList extends StatelessWidget {
         init: HomeController(),
         builder: (hc) {
           return ListView.builder(
-              // controller: hc.controller,
               primary: false,
               shrinkWrap: true,
               itemCount: hc.searchlist!.length,
@@ -27,10 +26,9 @@ class SearchList extends StatelessWidget {
                       width: Get.size.width * 0.4,
                       child: InkWell(
                         onTap: () {
-                          Get.to(() => DetayView(detailId: ite.id!));
+                          Get.to(() => DetailView(detailId: ite.id!));
                         },
                         child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Container(
                               width: Get.size.width * 0.3,
@@ -78,7 +76,6 @@ class SearchList extends StatelessWidget {
                                     ),
                                     movieText(
                                         "Start date: ", ite.startDate ?? ""),
-                                    //eger sol null ise sağ yap
                                     movieText("Status: ", ite.status ?? ""),
                                     movieText("Country:", ite.country ?? "")
                                   ],

@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:movie_api/detail/detay_service/detay_service.dart';
+import 'package:movie_api/detail/detail_service/detail_service.dart';
 import 'package:movie_api/entity/detail_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DetayController extends GetxController {
+class DetailController extends GetxController {
   final int detailId;
   bool isLoading = true;
   TvShow? detail;
@@ -11,7 +11,7 @@ class DetayController extends GetxController {
   List<String>? pictures;
   List<String>? genreslist;
   List<Episodes>? episodelist;
-  DetayController({required this.detailId});
+  DetailController({required this.detailId});
   @override
   void onInit() {
     getDetail();
@@ -30,12 +30,10 @@ class DetayController extends GetxController {
 
     pictures = detail!.pictures;
     genreslist = detail!.genres;
-     episodelist = detail!.episodes;
-    print(episodelist![0].name);
+    episodelist = detail!.episodes;
+
     setIsloading(false);
   }
 
-  clickUrl(String url) async{
-  
-  }
+  clickUrl(String url) async {}
 }

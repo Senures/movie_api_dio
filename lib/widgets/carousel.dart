@@ -1,8 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:movie_api/detail/detay_view/detay_view.dart';
+import 'package:movie_api/detail/detail_view/detail_view.dart';
 import 'package:movie_api/home/home_controller/home_controller.dart';
+import 'package:movie_api/widgets/circularProgress.dart';
 
 class CarouselList extends StatelessWidget {
   const CarouselList({Key? key}) : super(key: key);
@@ -17,11 +18,10 @@ class CarouselList extends StatelessWidget {
                   .map(
                     (item) => InkWell(
                       onTap: () {
-                        Get.to(() => DetayView(detailId: item.id!));
+                        Get.to(() => DetailView(detailId: item.id!));
                       },
                       child: Container(
                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                        //width: Get.size.width * 0.5,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -30,22 +30,26 @@ class CarouselList extends StatelessWidget {
                           children: [
                             Expanded(
                               flex: 8,
-                              child: Container(
+                              child: SizedBox(
                                 width: Get.size.width * 0.50,
-                                //height: 170.0,
-                                color: Colors.amber,
-                                child: Image.network(
-                                  item.imageThumbnailPath!,
-                                  fit: BoxFit.fill,
-                                ),
+                                child: Image.network(item.imageThumbnailPath!,
+                                    fit: BoxFit.fill, loadingBuilder:
+                                        (BuildContext context, Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+
+                                  return Center(
+                                    child: customCircularProgress(),
+                                  );
+                                }),
                               ),
                             ),
                             Expanded(
                                 flex: 3,
                                 child: Container(
                                   padding: const EdgeInsets.only(top: 5.0),
-                                  //margin: EdgeInsets.all(8.0),
-                                  //color: Colors.blue,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:

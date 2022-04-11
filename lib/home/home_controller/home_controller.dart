@@ -27,9 +27,9 @@ class HomeController extends GetxController {
     controller!.addListener(() {
       if (controller!.position.pixels == controller!.position.maxScrollExtent) {
         isPageLoading = true;
-        //burda liste sonuna gitti true oldu yani circular progress dönücek
+    
         currentPage = currentPage + 1;
-        //current page dönerken 2.sayfayı apiye yollayacak
+        
         getHomeApiList();
         update();
       } else {}
@@ -71,19 +71,17 @@ class HomeController extends GetxController {
   }
 
   getSearchList() async {
-    print("GETSEARCH LİSTE GİRDİ");
+  
     setIsloading(true);
-    //önemli veri çekilirken circular gösterir
     search = await HomeService().getSearchApi(searchcontroller.text);
     if (searchlist == null) {
       searchlist = search!.tvShows;
       setIsloading(false);
-      //eğer liste boş ise
-
+    
     } else {
       for (var item in search!.tvShows!) {
         searchlist!.add(item);
-      } //bu her sayfa aşağı indiğinde listenin sonuna ekliyor
+      } 
       setIsloading(false);
       isPageLoading = false;
       update();
@@ -94,8 +92,5 @@ class HomeController extends GetxController {
     searchcontroller.clear();
     update();
   }
-  /*  isSearching(bool b){
-    searching=b;
-    update();
-  } */
+ 
 }

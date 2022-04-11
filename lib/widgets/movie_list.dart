@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:movie_api/detail/detay_view/detay_view.dart';
+import 'package:movie_api/detail/detail_view/detail_view.dart';
 import 'package:movie_api/home/home_controller/home_controller.dart';
 import 'package:movie_api/widgets/circularProgress.dart';
 
-class HomeList extends StatelessWidget {
-  const HomeList({Key? key}) : super(key: key);
+class MovieList extends StatelessWidget {
+  const MovieList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,6 @@ class HomeList extends StatelessWidget {
           return Column(
             children: [
               ListView.builder(
-                  // controller: hc.controller,
                   primary: false,
                   shrinkWrap: true,
                   itemCount: hc.list!.length,
@@ -29,10 +28,9 @@ class HomeList extends StatelessWidget {
                           width: Get.size.width * 0.4,
                           child: InkWell(
                             onTap: () {
-                              Get.to(() => DetayView(detailId: ite.id!));
+                              Get.to(() => DetailView(detailId: ite.id!));
                             },
                             child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Container(
                                   width: Get.size.width * 0.3,
@@ -54,9 +52,6 @@ class HomeList extends StatelessWidget {
                                   child: Container(
                                     padding: const EdgeInsets.all(8.0),
                                     width: Get.size.width * 0.5,
-
-                                    //height: 150.0,
-
                                     decoration: const BoxDecoration(
                                         color: Color(0xff221957),
                                         boxShadow: [
@@ -81,7 +76,6 @@ class HomeList extends StatelessWidget {
                                         ),
                                         movieText("Start date: ",
                                             ite.startDate ?? ""),
-                                        //eger sol null ise sağ yap
                                         movieText("Status: ", ite.status ?? ""),
                                         movieText("Country:", ite.country ?? "")
                                       ],
@@ -94,7 +88,7 @@ class HomeList extends StatelessWidget {
                         ));
                   }),
               hc.isPageLoading
-                  ? Container(
+                  ? SizedBox(
                       width: Get.size.width,
                       height: 50.0,
                       child: Center(child: customCircularProgress()))

@@ -26,7 +26,7 @@ class HomeView extends StatelessWidget {
                       child: customCircularProgress(),
                     )
                   : SafeArea(
-                      child: Container(
+                      child: SizedBox(
                         width: Get.size.width,
                         height: Get.size.height,
                         child: SingleChildScrollView(
@@ -49,101 +49,113 @@ class HomeView extends StatelessWidget {
                                         CustomSizedBox(
                                             height: Get.size.height * 0.03),
                                         const CarouselList(),
-                                      ],
-                                    )
-                                  : SizedBox(),
-                              /*  "Most Popular TV Shows".homeText(),
-                            CustomSizedBox(height: Get.size.height * 0.03),
-                            const CarouselList(), */
-                              hc.searchcontroller.text.isEmpty
-                                  ? Row(
-                                      children: [
                                         "All Shows".homeText(),
-                                        SizedBox(),
+                                        const MovieList()
                                       ],
                                     )
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                  : Column(
                                       children: [
-                                        "Search Result".homeText(),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 30.0),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              hc.clearSearch();
-                                            },
-                                            child: Container(
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            "Search Result".homeText(),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 30.0),
+                                              child: GestureDetector(
+                                                  onTap: () {
+                                                    hc.clearSearch();
+                                                  },
+                                                  child: hc.searchlist!.isEmpty
+                                                      ? const SizedBox()
+                                                      : Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          width:
+                                                              Get.size.width *
+                                                                  0.08,
+                                                          height:
+                                                              Get.size.height *
+                                                                  0.04,
+                                                          decoration: BoxDecoration(
+                                                              color: const Color(
+                                                                  0xff221957),
+                                                              borderRadius: BorderRadius.circular(5.0),
+                                                              boxShadow: const [
+                                                                BoxShadow(
+                                                                    blurRadius:
+                                                                        1.0,
+                                                                    spreadRadius:
+                                                                        1.0,
+                                                                    color: Color(
+                                                                        0xff4d3ea6))
+                                                              ]),
+                                                          child: const Icon(
+                                                            Icons.arrow_back,
+                                                            color: Color(
+                                                                0xffeceded),
+                                                            size: 25.0,
+                                                          ))),
+                                            )
+                                          ],
+                                        ),
+                                        hc.searchlist!.isEmpty
+                                            ? Container(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
                                                 alignment: Alignment.center,
-                                                // padding: EdgeInsets.all(8.0),
-                                                width: Get.size.width * 0.08,
-                                                height: Get.size.height * 0.04,
-                                                decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0xff221957),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                    boxShadow: const [
-                                                      BoxShadow(
-                                                          blurRadius: 1.0,
-                                                          spreadRadius: 1.0,
-                                                          color:
-                                                              Color(0xff4d3ea6))
-                                                    ]),
-                                                child:const Icon(
-                                                  Icons.arrow_back,
-                                                  color: Color(0xffeceded),
-                                                  size: 25.0,
-                                                )),
-                                          ),
-                                        )
+                                                width: Get.size.width,
+                                                height: Get.size.height * 0.4,
+                                                //color: Colors.red,
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: Get.size.width * 0.9,
+                                                  height:
+                                                      Get.size.height * 0.20,
+
+                                                  //color: Colors.white,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                      const Icon(
+                                                        Icons
+                                                            .search_off_rounded,
+                                                        size: 50.0,
+                                                        color:
+                                                            Color(0xff4d3ea6),
+                                                      ),
+                                                      const Text(
+                                                        "No results found for your match",
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xffeceded),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 16.0),
+                                                      ),
+                                                      ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                            primary:
+                                                                const Color(
+                                                                    0xff4d3ea6),
+                                                          ),
+                                                          onPressed: () {
+                                                            hc.clearSearch();
+                                                          },
+                                                          child: const Text(
+                                                              "Back to Home"))
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            : const SearchList()
                                       ],
                                     ),
-                              /*    hc.searchcontroller.text.isEmpty
-                                  ? "All Shows".homeText()
-                                  : "Search Result".homeText(), */
-                              hc.searchcontroller.text.isEmpty
-                                  ? const HomeList()
-                                  : hc.searchlist!.length == 0
-                                      ? Container(
-                                          padding: const EdgeInsets.all(8.0),
-                                          alignment: Alignment.center,
-                                          width: Get.size.width,
-                                          height: Get.size.height * 0.4,
-                                          //color: Colors.red,
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            width: Get.size.width * 0.9,
-                                            height: Get.size.height * 0.09,
-
-                                            //color: Colors.white,
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  "No results found for your match",
-                                                  style: TextStyle(
-                                                      color: Color(0xffeceded),
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15.0),
-                                                ),
-                                                CustomSizedBox(
-                                                  height:
-                                                      Get.size.height * 0.01,
-                                                ),
-                                                Icon(
-                                                  Icons.search_off_rounded,
-                                                  size: 40.0,
-                                                  color: Color(0xff4d3ea6),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      : SearchList()
-                              //: const SearchList(),
                             ],
                           ),
                         ),
@@ -160,7 +172,7 @@ customTitle() {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
+        SizedBox(
             //color: Colors.red,
             width: Get.size.width * 0.06,
             height: Get.size.height * 0.06,
@@ -169,7 +181,7 @@ customTitle() {
               color: const Color(0xffeceded),
               width: 35.0,
             )),
-        Container(
+        SizedBox(
           width: Get.size.width * 0.2,
           // color: Colors.amber,
           child: Row(
@@ -226,13 +238,9 @@ customSearch() {
       GestureDetector(
         onTap: () {
           if (hc.searchlist != null) {
-            //daha çnce search yapınca result gelip liste doluyor,
-            //bu searche baska bir film gelcek eger lsite temizlenmezse ilk result listesinin
-            //sonuna 2.result ekleniyor ,o yüzden bu listeyi temizlememiyiz
             hc.searchlist!.clear();
           }
           hc.getSearchList();
-          /*  hc.isSearching(true); */
         },
         child: Container(
           decoration: BoxDecoration(
